@@ -13,8 +13,9 @@ import { RedisService } from './redis.service';
       useFactory: async (configService: ConfigService) => ({
         readyLog: true,
         config: {
-          host: configService.get<string>('REDIS_HOST', 'localhost'),
-          port: configService.get<number>('REDIS_PORT', 6379),
+          host: configService.get<string>('REDIS_HOST'),
+          port: configService.get<number>('REDIS_PORT'),
+          password: configService.get<string>('REDIS_PASSWORD'),
         },
       }),
     }),
@@ -22,4 +23,4 @@ import { RedisService } from './redis.service';
   providers: [RedisService],
   exports: [RedisService],
 })
-export class RedisModule {}
+export class RedisModule { }
