@@ -438,7 +438,7 @@ export class EmployeeService {
 
       const isOvernight = endH < startH || (endH === startH && endM < startM);
 
-      let shiftEnd = new Date(
+      const shiftEnd = new Date(
         scheduleDateVN.getFullYear(),
         scheduleDateVN.getMonth(),
         scheduleDateVN.getDate(),

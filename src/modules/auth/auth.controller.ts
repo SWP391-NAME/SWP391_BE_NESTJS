@@ -77,10 +77,11 @@ export class AuthController {
     );
     const rfExpireTime = this.configService.get<ms.StringValue>('RF_EXPIRE_TIME');
     const maxAge = rfExpireTime ? ms(rfExpireTime) : ms('7d');
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge,
     });
     return {
@@ -108,10 +109,11 @@ export class AuthController {
     const { accessToken, refreshToken } = await this.authService.refreshToken(token);
     const rfExpireTime = this.configService.get<ms.StringValue>('RF_EXPIRE_TIME');
     const maxAge = rfExpireTime ? ms(rfExpireTime) : ms('7d');
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge,
     });
     return {
@@ -158,10 +160,11 @@ export class AuthController {
       const rfExpireTime = this.configService.get<ms.StringValue>('RF_EXPIRE_TIME');
       const maxAge = rfExpireTime ? ms(rfExpireTime) : ms('7d');
 
+      const isProduction = process.env.NODE_ENV === 'production';
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: false,
-        sameSite: 'lax',
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
         maxAge,
       });
       const encoded = encodeBase64(accessToken);
