@@ -140,8 +140,13 @@ export class AuthService {
   async signOut(userId: string, accessToken: string): Promise<void> {
     await this.tokenService.deleteToken(userId);
     const { exp } = await this.tokenService.decodeToken(accessToken, TokenType.ACCESS);
-    const expiredTime = Date.now() + exp! * 1000 - Date.now();
-    await this.redisService.set(`bl:${accessToken}`, '1', expiredTime);
+    
+    // exp is in seconds absolute. Calculate relative TTL in seconds.
+    const ttlInSeconds = exp! - Math.floor(Date.now() / 1000);
+    
+    if (ttlInSeconds > 0) {
+      await this.redisService.set(`bl:${accessToken}`, '1', ttlInSeconds);
+    }
   }
 
   async refreshToken(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {

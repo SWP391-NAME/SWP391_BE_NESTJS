@@ -10,7 +10,7 @@ import { RedisService } from './redis.service';
     _RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         readyLog: true,
         config: {
           host: configService.get<string>('REDIS_HOST'),

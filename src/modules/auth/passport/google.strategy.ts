@@ -16,7 +16,7 @@ export class GoogleOauth2 extends PassportStrategy(Strategy, 'google') {
     });
   }
 
-  async validate(accessToken: string, refreshToken: string, profile: any, done: Function) {
+  validate(accessToken: string, refreshToken: string, profile: any, done: Function) {
     const user = {
       provider: AuthProvider.GOOGLE,
       providerId: profile.id,

@@ -83,7 +83,6 @@ import { NotificationInterceptor } from './common/interceptor/notification.inter
       }),
     }),
     EmailModule,
-    RedisModule,
     CustomerModule,
     CertificateModule,
     VehicleModule,
